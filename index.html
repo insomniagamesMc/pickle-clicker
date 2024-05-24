@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pickle Clicker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.9, user-scalable=no" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Pickle Clicker is the ultimate idle game for pickle lovers! Click the pickle to earn pickles and use them to buy upgrades that will help you earn even more. Become the ultimate pickle tycoon with auto-clickers and pickling boosters.">
+
+    <!-- OG Meta Tags for Social Sharing -->
+    <meta property="og:site_name" content="Pickle Clicker" /> <!-- website name -->
+    <meta property="og:title" content="Pickle Clicker" /> <!-- title shown in the actual shared post -->
+    <meta property="og:description" content="Click the pickle, earn pickles, buy upgrades, and become the ultimate pickle tycoon in this idle game for pickle lovers. Watch your pickle empire grow with auto-clickers and pickling boosters." /> <!-- description shown in the actual shared post -->
+    <meta property="og:image" content="https://fennixindi.net/projects/games/pickle-clicker/assets/product.png" /> <!-- image link (replace with your game's image URL) -->
+    <meta property="og:url" content="https://fennixindi.net/projects/games/pickle-clicker" /> <!-- URL of your game's page -->
+
+    <!-- Keywords -->
+    <meta name="keywords" content="Pickle Clicker, idle game, pickles, upgrades, pickle empire, auto-clickers, pickling boosters, pickle tycoon" />
+
+  <script src="https://cdn.jsdelivr.net/npm/numbro@2.3.6/dist/numbro.min.js"></script>
+
+
+  <link rel="shortcut icon" href="/games/game-art/pickles/pickle-fav.png" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+
+  <script type="module" src="/dist/js/script.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-performance-compat.js"></script>
+
+<style>
+  /* Global Styles */
+  body {
+    background-color: #1D2419;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  .prevent-select {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+
+  /* Image Styles */
+  .image img {
+    transition: all 0.1s ease-in-out;
+  }
+
+  .image img:hover {
+    transform: scale(1.01);
+  }
+
+  .image img:active {
+    transform: scale(0.99);
+  }
+
+  /* Upgrades Styles */
+  .upgrades button,
+  .upgrades2 button {
+    background: #242424;
+    color: #ffffff;
+    border-radius: 10%;
+  }
+
+  /* Navigation Styles */
+  .navigation {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #313131;
+    opacity: 0.3;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+
+  .navigation a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    opacity: 100;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .navigation a:hover {
+    color: #f1f1f1;
+  }
+
+  .navigation .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #2D2D2D;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+  }
+
+  .openbtn:hover {
+    background-color: #3E3E3E;
+  }
+
+  #main {
+    transition: margin-left 0.5s;
+    padding: 16px;
+  }
+  #container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  #achievements {
+    width: 280px;
+    height: 500px;
+    color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  @media (max-width: 800px) {
+    #achievements {
+      position: static;
+      width: 100%;
+      height: 200px;
+      max-height: 50%;
+      margin-top: 16px;
+    }
+  }
+  /* Footer Styles */
+  footer {
+    background-color: #181818;
+    padding: 25px;
+  }
+
+  /* Carousel Styles */
+  .carousel-inner img {
+    width: 100%;
+    margin: auto;
+    min-height: 200px;
+  }
+  /* Scrollbar Styles */
+  html::-webkit-scrollbar {
+    width: 0px;
+  }
+</style>
+</head>
+
+<body onload="updatecount()" class="prevent-select">
+  <div align="center">
+    <h1 style="color: #ffffff" ;>Pickle Clicker</h1>
+
+</body>
+<style>
+  .button {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 15px 32px;
+  }
+</style>
+<h2 id="avg_pickle" style="color: #ffffff" ;>0 Pickles Per Second</h2>
+<h3 id="pickles" style="color: #ffffff" ;>You have 0 Pickles</h3>
+<a class="image" onclick="clicker.pickles += clicker.click_pickle"><img src="assets/pickles/pickle.png"
+    class="img-responsive" style="width:30%"></a>
+
+
+  <center>
+    <br>
+    <h3 style="color: #ffffff">Auto Upgrades</h3>
+    <div id="upgrades" class="upgrades" style="color: #ffffff" align="center">
+    </div>
+    </left>
+    
+      <br>
+  </center>
+
+  <div id="container">
+    <div id="achievements">
+      <h3 style="color: #ffffff">Achievements</h3>
+    </div>
+  </div>
+
+</body>
+
+</html>
